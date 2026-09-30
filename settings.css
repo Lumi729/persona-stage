@@ -1,0 +1,38 @@
+/* The settings entry lives outside the stage's Shadow DOM.
+   Keep these rules scoped so other extensions retain their theme styles. */
+#persona-stage-settings {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    flex: 0 0 100%;
+    grid-column: 1 / -1;
+}
+
+#persona-stage-settings #persona-stage-open {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 2.75em;
+    margin: 0.5em 0;
+    padding: 0.6em 0.75em;
+    writing-mode: horizontal-tb;
+    white-space: nowrap;
+}
+
+#persona-stage-open .persona-stage-entry-icon {
+    flex: 0 0 auto;
+}
+
+#persona-stage-open .persona-stage-entry-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

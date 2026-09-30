@@ -42,6 +42,19 @@ function clamp(){if(win.classList.contains('expanded'))return;const pos=settings
 const canvas=$('canvas'),ctx=canvas.getContext('2d');function startAnimation(){cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)}function draw(ms){raf=requestAnimationFrame(draw);if(document.hidden||!opened||ms-lastFrame<33)return;lastFrame=ms;const w=stage.clientWidth,h=stage.clientHeight,dpr=Math.min(devicePixelRatio||1,1.5);if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr)}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);const t=motion?ms/1000:0,style=styleFor(profile(current));if(analyser&&!audio.paused&&motion){analyser.getByteFrequencyData(bins);energy=bins.slice(0,20).reduce((a,b)=>a+b,0)/5100}else energy=0;if(style.effect==='none')return;ctx.globalAlpha=.3;ctx.strokeStyle=style.secondary;ctx.lineWidth=1;for(let i=0;i<5;i++){ctx.beginPath();ctx.ellipse(w/2,h*.82,w*(.2+i*.075),h*(.025+i*.02),0,0,Math.PI*2);ctx.stroke()}if(style.effect==='laser'){for(let i=0;i<8;i++){ctx.strokeStyle=i%2?style.accent:style.secondary;ctx.globalAlpha=.14+energy*.25;ctx.beginPath();ctx.moveTo(w*(i/7),h*.85);ctx.lineTo(w*(.5+Math.sin(t*.3+i)*.7),0);ctx.stroke()}for(let i=0;i<70;i++){ctx.globalAlpha=.4;ctx.fillStyle=i%2?style.accent:style.secondary;ctx.fillRect((i*67%997)/997*w,h*(.91+(i%4)*.015),2,5+energy*4)}}else{for(let i=0;i<45;i++){ctx.globalAlpha=.15+(i%5)*.12;ctx.fillStyle=i%2?style.accent:style.secondary;const x=(i*73%997)/997*w+Math.sin(t*.2+i)*8,y=((i*53%991)/991*h+t*(style.effect==='snow'?12:2))%h;ctx.beginPath();ctx.arc(x,y,style.effect==='snow'?1.6:1,0,Math.PI*2);ctx.fill()}}for(const stamp of pulses){const a=(ms-stamp)/1000;if(a>2)continue;ctx.globalAlpha=(1-a/2)*.7;ctx.strokeStyle=style.accent;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(w/2,h*.8,a*w*.5,a*h*.15,0,0,Math.PI*2);ctx.stroke()}ctx.globalAlpha=1}
 function refreshed(){loadPersonas();if(!panel.classList.contains('hidden'))panel.classList.add('hidden')}for(const key of ['PERSONA_CHANGED','PERSONA_UPDATED','PERSONA_RENAMED','PERSONA_CREATED','PERSONA_DELETED','CHAT_CHANGED']){const ev=context.eventTypes?.[key];if(ev)context.eventSource.on(ev,refreshed)}if(context.eventTypes?.SETTINGS_UPDATED)context.eventSource.on(context.eventTypes.SETTINGS_UPDATED,()=>{const p=collectPersonas(getContext().powerUserSettings,active(),getContext().name1);if(JSON.stringify(p)!==JSON.stringify(personas))refreshed()});
 loadPersonas();win.classList.toggle('still',!motion);$('[data-action=motion]').textContent='动态 '+(motion?'开':'关');
-const mount=document.querySelector('#extensions_settings2')||document.querySelector('#extensions_settings');if(mount){const b=button('✧ 打开映我 · 人设展示台',show);b.className='menu_button';mount.append(b)}
+const mount=document.querySelector('#extensions_settings2')||document.querySelector('#extensions_settings');
+if(mount){
+    const entry=el('div');
+    entry.id='persona-stage-settings';
+    const b=button(null,show);
+    b.id='persona-stage-open';
+    b.className='menu_button menu_button_icon';
+    b.title='打开映我 · 人设展示台';
+    const icon=el('span','✧','persona-stage-entry-icon');
+    icon.setAttribute('aria-hidden','true');
+    b.append(icon,el('span','打开映我 · 人设展示台','persona-stage-entry-label'));
+    entry.append(b);
+    mount.append(entry);
+}
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
