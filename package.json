@@ -4,6 +4,6 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check index.js && node --check core.mjs && node --check mobile.mjs && node --check wardrobe.mjs"
+    "check": "node --check index.js && node --check core.mjs && node --check mobile.mjs && node --check wardrobe.mjs && node --check online-music.mjs && node --check music-core.mjs"
   }
 }

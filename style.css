@@ -13,3 +13,11 @@
 .field input[type=checkbox]{display:inline-block;width:auto;margin-right:8px}
 .field:has(input[type=checkbox])>span{display:inline}
 @media(max-width:380px){header{gap:3px;padding:8px 5px}header strong{font-size:12px;letter-spacing:0}.tools{gap:2px}.tools button{padding:6px 4px}}
+.music-card{padding:12px 0;border-bottom:1px solid color-mix(in srgb,var(--accent),transparent 80%)}
+.music-card strong,.music-card small{display:block;overflow-wrap:anywhere}
+.music-card small{opacity:.75;margin-top:5px}
+.music-link{color:var(--secondary);font-size:12px;overflow-wrap:anywhere}
+.panel-body form>input[type=search]{box-sizing:border-box;width:100%;padding:9px;background:var(--base);color:inherit;border:1px solid var(--accent);border-radius:5px}
+.panel-body details{margin:15px 0;padding:10px;border:1px solid color-mix(in srgb,var(--accent),transparent 65%);border-radius:6px}
+.panel-body summary{cursor:pointer}
+.music-results .row button{font-size:12px}
